@@ -3,6 +3,7 @@
 void	draw_line_old(t_data *img, int x1, int y1, int x2, int y2)
 {
 	int m_new = 2 * (y2 - y1);
+	(void)img;
 	int slope = m_new - (x2 - x1);
 	for (int x = x1, y = y1; x <= x2; x++) {
 		// if (y > y2)

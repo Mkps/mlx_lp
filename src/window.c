@@ -5,12 +5,19 @@ int	ft_mlx_close_window(int keycode, t_vars *vars)
 	ft_printf("keycode is %i\n", keycode);
 	if (keycode == 65307 || keycode == 27)
 	{
+		mlx_destroy_image(vars->mlx, vars->img->img);
 		mlx_destroy_window(vars->mlx, vars->window);
+		free(vars->mlx);
 		exit(0);
 	}
 	return (0);
 }
 
+int ft_mlx_destroy_hook(t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->window);
+	exit(0);
+}
 void	ft_mlx_fill(t_data img, int size_x, int size_y, int color)
 {
 	int x;
