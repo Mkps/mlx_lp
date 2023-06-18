@@ -1,8 +1,4 @@
-#include "../minilibx/mlx.h"
-#include "../libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include "../includes/mlx_lp.h"
 
 typedef struct s_vars {
 	void	*mlx;
