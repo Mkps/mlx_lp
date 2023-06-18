@@ -17,7 +17,6 @@ int	ft_mlx_close_window(int keycode, t_vars *vars)
 	}
 	return (0);
 }
-
 int ft_mlx_destroy_hook(t_vars *vars)
 {
 	ft_mlx_exit(vars);

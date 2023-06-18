@@ -13,6 +13,8 @@ typedef struct	s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	float	zoom;
+	float	offset;
 }				t_data;
 
 typedef struct s_complex {
@@ -38,5 +40,6 @@ void	ft_draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
 void draw_triangle(t_data *img, int x, int y, int size, int color);
 void draw_rect(t_data *img, int w, int h, int color);
 void ft_mandelbrot(t_data *img, int w, int h);
+void	ft_julia(t_data *img, int w, int h);
 
 #endif
