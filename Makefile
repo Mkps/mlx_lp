@@ -15,7 +15,8 @@ SRCDIR = src
 INCDIR = includes
 OBJ_DIR = build
 
-SRC = $(SRCDIR)/main.c 
+SRC = $(SRCDIR)/main.c $(SRCDIR)/window.c $(SRCDIR)/draw.c $(SRCDIR)/utils.c $(SRCDIR)/mandelbrot.c
+
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJ_DIR)/%.o)
 LIB = -lft -lmlx -lXext -lX11 -lm
 CC = gcc
