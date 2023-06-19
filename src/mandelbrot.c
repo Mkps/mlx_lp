@@ -86,22 +86,20 @@ void ft_mandelbrot(t_data *img, int width, int height)
 		x += 0.0005;
 	}
 }
-
-int is_in_set_j(double x, double y)
+int is_in_set_j(double x, double y, t_complex c)
 {
 	t_complex	z;
-	t_complex	c;
 	int			i;
-
-	c.real = -0.7;
-	c.imaginary = 0.27015;
+	double		t;
 	z.real = x;
 	z.imaginary = y;
+	t = 0;
 	i = 1;
 	while (i < 250)
 	{
-		z = ft_complex_mult(z, z);
-		z = ft_complex_add(z, c);
+		t = z.real;
+		z.real = t * t - z.imaginary * z.imaginary + c.real;
+		z.imaginary = 2 * z.imaginary * t + c.imaginary;
 		if (ft_complex_sqrnorm(z) > 4)
 			return (i);
 		i++;
@@ -109,7 +107,7 @@ int is_in_set_j(double x, double y)
 	return (0);
 }
 
-void ft_julia(t_data *img, int width, int height)
+void ft_julia(t_data img, int width, int height, t_complex c)
 {
 	double x;
 	double y;
@@ -118,25 +116,29 @@ void ft_julia(t_data *img, int width, int height)
 	int 	iter;
 	double	k;
 
-	k = 1.0 * img->zoom;
+	clock_t begin = clock();
+	k = 1.0 * img.zoom;
 	x = 0.0;
 	while (x < 1.0)
 	{
 		y = 0.0;
 		while (y < 1.0) 
 		{
-			point_x = ft_lerp(-k + img->offset, k + img->offset, x);
+			point_x = ft_lerp(-k + img.offset, k + img.offset, x);
 			point_y = ft_lerp(-k, k, y);
-			iter = is_in_set_j(point_x, point_y);
+			iter = is_in_set_j(point_x, point_y, c);
 			if (!iter)
 			{
-				ft_mlx_pixel_put(img, x * width, y * height, 0xFF000000);
+				ft_mlx_pixel_put(&img, x * width, y * height, 0xFF000000);
 			}
 			else
-				ft_mlx_pixel_put(img, x * width, y * height, create_argb(255, 0, 3 * iter % 255, 3 * iter % 255));
+				ft_mlx_pixel_put(&img, x * width, y * height, create_argb(255, 0, 3 * iter % 255, 3 * iter % 255));
 			y+= 0.001;
 		}
 		x += 0.001;
 	}
-
+	clock_t end = clock();
+	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("ft_julia 1 = %f\n", time_spent);
 }
+

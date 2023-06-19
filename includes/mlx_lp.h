@@ -6,6 +6,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/wait.h>
+# include <time.h>
 
 typedef struct	s_data {
 	void	*img;
@@ -25,7 +26,8 @@ typedef struct s_complex {
 typedef struct s_vars {
 	void	*mlx;
 	void	*window;
-	t_data	*img;
+	t_complex c;
+	t_data	img;
 }	t_vars;
 
 int		ft_mlx_close_window(int keycode, t_vars *vars);
@@ -40,6 +42,7 @@ void	ft_draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
 void draw_triangle(t_data *img, int x, int y, int size, int color);
 void draw_rect(t_data *img, int w, int h, int color);
 void ft_mandelbrot(t_data *img, int w, int h);
-void	ft_julia(t_data *img, int w, int h);
+void	ft_julia(t_data img, int w, int h, t_complex c);
+int		ft_mlx_key_hook(int keycode, t_vars *vars);
 
 #endif
