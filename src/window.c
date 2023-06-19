@@ -1,7 +1,6 @@
 #include "../includes/mlx_lp.h"
 
-void	init_img(t_vars *vars)
-{
+void	init_img(t_vars *vars) {
 	int		bpp;
 	int		line_length;
 	int		endian;
@@ -10,23 +9,17 @@ void	init_img(t_vars *vars)
 	vars->img.line_length = line_length;
 	vars->img.bits_per_pixel = bpp;
 	vars->img.endian = endian;
-	vars->img.zoom = 1.0;
-	vars->img.offset = 0.0;
 }
 void	ft_mlx_exit(t_vars *vars)
 {
 	mlx_destroy_image(vars->mlx, vars->img.img);
-	mlx_destroy_window(vars->mlx, vars->window);
+	mlx_destroy_window(vars->mlx, vars->window_data.window_ptr);
 	mlx_destroy_display(vars->mlx);
 	free(vars->mlx);
 	exit(0);
 }
 int	ft_mlx_key_hook(int keycode, t_vars *vars)
 {
-	t_complex c;
-
-	c.real = 0;
-	c.imaginary = 0;
 	ft_printf("keycode is %i\n", keycode);
 	if (keycode == 65307 || keycode == 27)		
 	{
@@ -38,18 +31,69 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 		vars->c.real = -0.506667;
 		vars->c.imaginary = 0.520000;
 		init_img(vars);
-		ft_julia(vars->img, 1000, 1000, vars->c);
-		mlx_put_image_to_window(vars->mlx, vars->window, vars->img.img, 0, 0);
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
 	}
 	if (keycode == '2')
 	{
 		mlx_destroy_image(vars->mlx, vars->img.img);
-		c.real = 0.18;
-		c.imaginary = -0.566667;
+		vars->c.real = 0.18;
+		vars->c.imaginary = -0.566667;
 		init_img(vars);
-		ft_julia(vars->img, 1000, 1000, c);
-		mlx_put_image_to_window(vars->mlx, vars->window, vars->img.img, 0, 0);
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
 	}
+	if (keycode == 'd')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->offset_x += 0.005;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+
+	if (keycode == 'a')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->offset_x -= 0.005;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+	if (keycode == 'w')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->offset_y -= 0.005;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+
+	if (keycode == 's')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->offset_y += 0.005;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+	if (keycode == 'x')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->zoom *= 0.95;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+	if (keycode == 'z')
+	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
+		init_img(vars);
+		vars->zoom *= 1.05;
+		ft_julia(vars);
+		mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	}
+	
 	return (0);
 }
 int ft_mlx_destroy_hook(t_vars *vars)

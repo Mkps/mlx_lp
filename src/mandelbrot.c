@@ -107,7 +107,7 @@ int is_in_set_j(double x, double y, t_complex c)
 	return (0);
 }
 
-void ft_julia(t_data img, int width, int height, t_complex c)
+void ft_julia(t_vars *vars)
 {
 	double x;
 	double y;
@@ -115,24 +115,26 @@ void ft_julia(t_data img, int width, int height, t_complex c)
 	double	point_y;
 	int 	iter;
 	double	k;
+	t_data img_id;
 
 	clock_t begin = clock();
-	k = 1.0 * img.zoom;
+	k = 1.0 * vars->zoom;
 	x = 0.0;
+	img_id = vars->img;
 	while (x < 1.0)
 	{
 		y = 0.0;
 		while (y < 1.0) 
 		{
-			point_x = ft_lerp(-k + img.offset, k + img.offset, x);
-			point_y = ft_lerp(-k, k, y);
-			iter = is_in_set_j(point_x, point_y, c);
+			point_x = ft_lerp(-k + vars->offset_x, k + vars->offset_x, x);
+			point_y = ft_lerp(-k + vars->offset_y, k + vars->offset_y, y);
+			iter = is_in_set_j(point_x, point_y, vars->c);
 			if (!iter)
 			{
-				ft_mlx_pixel_put(&img, x * width, y * height, 0xFF000000);
+				ft_mlx_pixel_put(&img_id, x * vars->window_data.width, y * vars->window_data.width, 0xFF000000);
 			}
 			else
-				ft_mlx_pixel_put(&img, x * width, y * height, create_argb(255, 0, 3 * iter % 255, 3 * iter % 255));
+				ft_mlx_pixel_put(&img_id, x * vars->window_data.width, y * vars->window_data.width, create_argb(255, 3 * iter % 255, iter % 255, iter % 255));
 			y+= 0.001;
 		}
 		x += 0.001;

@@ -14,8 +14,6 @@ typedef struct	s_data {
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	float	zoom;
-	float	offset;
 }				t_data;
 
 typedef struct s_complex {
@@ -23,11 +21,20 @@ typedef struct s_complex {
 	double	imaginary;
 }	t_complex;
 
+typedef struct s_window {
+	void	*window_ptr;
+	int	width;
+	int	height;
+}	t_window;
 typedef struct s_vars {
 	void	*mlx;
-	void	*window;
 	t_complex c;
 	t_data	img;
+	float	zoom;
+	float	offset_x;
+	float	offset_y;
+	t_window	window_data;
+	
 }	t_vars;
 
 int		ft_mlx_close_window(int keycode, t_vars *vars);
@@ -42,7 +49,8 @@ void	ft_draw_line(t_data *img, int x0, int y0, int x1, int y1, int color);
 void draw_triangle(t_data *img, int x, int y, int size, int color);
 void draw_rect(t_data *img, int w, int h, int color);
 void ft_mandelbrot(t_data *img, int w, int h);
-void	ft_julia(t_data img, int w, int h, t_complex c);
+void	ft_julia(t_vars *vars);
 int		ft_mlx_key_hook(int keycode, t_vars *vars);
+void	init_img(t_vars *vars);
 
 #endif
