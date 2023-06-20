@@ -13,7 +13,7 @@ void	init_img(t_vars *vars) {
 void	ft_mlx_exit(t_vars *vars)
 {
 	mlx_destroy_image(vars->mlx, vars->img.img);
-	mlx_destroy_window(vars->mlx, vars->window_data.window_ptr);
+	mlx_destroy_window(vars->mlx, vars->w_ptr);
 	mlx_destroy_display(vars->mlx);
 	free(vars->mlx);
 	exit(0);
@@ -125,7 +125,7 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 			vars->is_menu_on = 1;
 	}
 	ft_fractal(vars->fractal, vars);
-	mlx_put_image_to_window(vars->mlx, vars->window_data.window_ptr, vars->img.img, 0, 0);
+	mlx_put_image_to_window(vars->mlx, vars->w_ptr, vars->img.img, 0, 0);
 	ft_menu(vars);
 	printf("zoom %f offset_x %f\n", vars->zoom, vars->offset_x);	
 	return (0);

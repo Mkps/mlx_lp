@@ -34,24 +34,24 @@ void ft_menu(t_vars *vars)
 	color = 0xFFFFFFFF;
 	if (vars->is_menu_on == 0)
 	{
-		mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 10, color,
+		mlx_string_put(vars->mlx, vars->w_ptr, x, 10, color,
 				"Press 'H' to open menu");
 		return ;
 
 	}
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 10, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 10, color,
 			"Press 'H' to close menu");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 35, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 35, color,
 			"Left, Right, Up, Down: [A] [D] [W] [S]");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 60, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 60, color,
 			"Zoom : [Mouse wheel or [Z]/[X]]");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 85, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 85, color,
 			"Change Fractal : [1, 2, ...]");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 110, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 110, color,
 			"Change Color : [NUM PAD : 1, 2, ...]");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 135, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 135, color,
 			"Increase/Decrease current iteration : [+] [-]");
-	mlx_string_put(vars->mlx, vars->window_data.window_ptr, x, 195, color,
+	mlx_string_put(vars->mlx, vars->w_ptr, x, 195, color,
 			"Exit : [ESCAPE]");
 }
 

@@ -24,13 +24,13 @@ typedef struct s_complex {
 }	t_complex;
 
 typedef struct s_window {
-	void	*window_ptr;
 	int	width;
 	int	height;
 }	t_window;
 typedef struct s_vars {
 	void	*fractal;
 	void	*mlx;
+	void	*w_ptr;
 	t_complex c;
 	t_data	img;
 	int		color;

@@ -62,34 +62,6 @@ double	ft_lerp(double a, double b, double t)
 }
 void ft_mandelbrot(t_vars *vars)
 {
-	// double x;
-	// double y;
-	// double	point_x;
-	// double	point_y;
-	// int iter;
-	// // float k;
-	//
-	// // k = 1 / (float)width;
-	// // (void)height;
-	// x = 0.0;
-	// while (x < 1.0)
-	// {
-	// 	y = 0.0;
-	// 	while (y < 1.0) 
-	// 	{
-	// 		point_x = ft_lerp(-2.0, 2.0, x);
-	// 		point_y = ft_lerp(-2.0, 2.0, y);
-	// 		iter = is_in_set(point_x, point_y);
-	// 		if (!iter)
-	// 		{
-	// 			ft_mlx_pixel_put(img, x * width, y * height, 0xFF000000);
-	// 		}
-	// 		else
-	// 			ft_mlx_pixel_put(img, x * width, y * height, create_argb(255, 3 * iter % 255, 3 * iter % 255, 3 * iter % 255));
-	// 		y+= 0.0005;
-	// 	}
-	// 	x += 0.0005;
-	// }
 	double x;
 	double y;
 	double	point_x;
