@@ -11,8 +11,8 @@ int	main(int argc, char **argv)
 	// int		b;
 	t_vars	vars;
 	// t_data	img;
-	vars.window_data.width = 1000;
-	vars.window_data.height = 1000;
+	vars.window_data.width = 800;
+	vars.window_data.height = 600;
 	vars.mlx = mlx_init();
 	vars.window_data.window_ptr = mlx_new_window(vars.mlx, vars.window_data.width, vars.window_data.height, "mlx");
 	init_img(&vars);
@@ -38,9 +38,14 @@ int	main(int argc, char **argv)
 	// ft_draw_line_thick(&img, 100, 300, 300, 300, color, 6);
 	// draw_triangle(vars.img->img, 300, 300, 150, 0xFFFF0000);
 	// ft_mandelbrot(&img, WIDTH, HEIGHT);	
-		
-	ft_julia(&vars);
+	vars.fractal = ft_mandelbrot;
+	vars.resolution = 1.0;
+	vars.iteration = 4;
+	vars.smooth = 8;
+	vars.is_menu_on = 0;
+	ft_fractal(vars.fractal, &vars);
 	mlx_put_image_to_window(vars.mlx, vars.window_data.window_ptr, vars.img.img, 0, 0);
+	ft_menu(&vars);
 	// // mlx_string_put(vars.mlx, vars.window, WIDTH / 3, HEIGHT / 20, 0xFFFFFFFF, "*** Mandelbrot ***");
 	mlx_hook(vars.window_data.window_ptr, 2, 1L<<0, ft_mlx_key_hook, &vars);
 	mlx_hook(vars.window_data.window_ptr, 17, 0, ft_mlx_destroy_hook, &vars); 
