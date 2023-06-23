@@ -68,11 +68,27 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 		vars->c.imaginary = -1.0;
 		vars->fractal = ft_julia;
 	}
+	// if (keycode == '7')
+	// {
+	// 	vars->c.real = -0.77146;
+	// 	vars->c.imaginary = -0.10119;
+	// 	vars->fractal = ft_julia;
+	// }
 	if (keycode == '7')
 	{
-		vars->c.real = -0.77146;
-		vars->c.imaginary = -0.10119;
-		vars->fractal = ft_julia;
+		vars->fractal = ft_newton;
+	}
+	if (keycode == '8')
+	{
+		vars->fractal = ft_flower;
+	}
+	if (keycode == '9')
+	{
+		vars->fractal = ft_nova;
+	}
+	if (keycode == 'v')
+	{
+		vars->fractal = ft_burning_ship;
 	}
 	if (keycode == 't')
 	{
@@ -117,6 +133,10 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 	{
 		vars->resolution *= 1.5;
 	}
+	if (keycode == 'b')
+		vars->smooth += 1;	
+	if (keycode == 'n')
+		vars->smooth -= 1;	
 	if (keycode == 'h')
 	{
 		if (vars->is_menu_on == 1)
@@ -124,6 +144,10 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 		else
 			vars->is_menu_on = 1;
 	}
+	if (keycode == 'c')
+		vars->color++;
+	if (keycode == 32)
+		vars->power++;
 	ft_fractal(vars->fractal, vars);
 	mlx_put_image_to_window(vars->mlx, vars->w_ptr, vars->img.img, 0, 0);
 	ft_menu(vars);

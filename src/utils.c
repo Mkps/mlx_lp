@@ -42,16 +42,79 @@ void ft_menu(t_vars *vars)
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 10, color,
 			"Press 'H' to close menu");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 35, color,
-			"Left, Right, Up, Down: [A] [D] [W] [S]");
+			"Move around with : [W][A][S][D]");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 60, color,
 			"Zoom : [Mouse wheel or [Z]/[X]]");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 85, color,
 			"Change Fractal : [1, 2, ...]");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 110, color,
-			"Change Color : [NUM PAD : 1, 2, ...]");
+			"Change Color : [TAB] || L-Mouse R-Mouse");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 135, color,
 			"Increase/Decrease current iteration : [+] [-]");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 195, color,
 			"Exit : [ESCAPE]");
 }
 
+t_complex ft_complex_add(t_complex c1, t_complex c2)
+{
+	t_complex tmp;
+
+	tmp.real = c1.real + c2.real;
+	tmp.imaginary = c1.imaginary + c2.imaginary;
+	return (tmp);
+}
+
+void	ft_fractal(void (*f)(t_vars*), t_vars *vars)
+{
+	f(vars);
+}
+
+double	ft_complex_sqrnorm(t_complex c)
+{
+	double	a;
+	double	b;
+
+	a = c.real * c.real;
+	b = c.imaginary * c.imaginary;
+	return (a + b);
+}
+
+t_complex ft_complex_mult(t_complex c1, t_complex c2)
+{
+	t_complex	tmp;
+
+	tmp.real = c1.real * c2.real - c1.imaginary * c2.imaginary;
+	tmp.imaginary = c1.real * c2.imaginary + c2.real * c1.imaginary;
+	
+	return (tmp);
+}
+
+t_complex ft_complex_sub(t_complex c1, t_complex c2)
+{
+	t_complex tmp;
+
+	tmp.real = c1.real - c2.real;
+	tmp.imaginary = c1.imaginary - c2.imaginary;
+	return (tmp);
+}
+
+t_complex ft_complex_pow(t_complex c1, int pow)
+{
+	t_complex tmp;
+
+	if (pow <= 0)
+	{
+		tmp.real = 1;
+		tmp.imaginary = 0;
+	}
+	if (pow == 1)
+		return (c1);
+	tmp = c1;
+	pow--;
+	while (pow)
+	{
+		tmp = ft_complex_mult(tmp, c1);
+		pow--;
+	}
+	return (tmp);
+}

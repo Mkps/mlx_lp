@@ -1,8 +1,8 @@
 #include "../includes/mlx_lp.h"
 void	ft_vars_init(t_vars *vars)
 {
-	vars->window_data.width = 800;
-	vars->window_data.height = 600;
+	vars->window_data.width = 1000;
+	vars->window_data.height = 1000;
 	vars->mlx = mlx_init();
 	vars->w_ptr = mlx_new_window(vars->mlx, vars->window_data.width, vars->window_data.height, "mlx");
 	init_img(vars);
@@ -11,11 +11,18 @@ void	ft_vars_init(t_vars *vars)
 	vars->c.real = 0.403333;
 	vars->c.imaginary = 0.273333;
 	vars->fractal = ft_mandelbrot;
-	vars->resolution = 1.0;
-	vars->iteration = 4;
-	vars->smooth = 8;
+	vars->resolution = ((float)vars->window_data.height / vars->window_data.width);
+	printf("resolution = %f\n", vars->resolution);
+	if (vars->window_data.width >= vars->window_data.height)
+		vars->resolution = ((float)vars->window_data.height / vars->window_data.width);
+	else
+		vars->resolution = ((float)vars->window_data.width / vars->window_data.height);
+	vars->iteration = 256;
+	vars->smooth = 1;
 	vars->is_menu_on = 0;
 	vars->zoom = 1.0;
+	vars->color = 0;
+	vars->power = 3;
 }
 
 

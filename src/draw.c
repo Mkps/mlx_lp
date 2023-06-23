@@ -148,29 +148,153 @@ int ft_color_hsv(double H, double s, double v)
 	rgb.b = trunc((ret.v + t2.s) * 255);
 	return(ft_color_argb(rgb));
 }
+
+int	ft_color_bbr(int iter)
+{
+	if (!iter)
+		return (0xFFFFFFFF);
+	if (iter % 3 == 0)
+		return (ft_color_int(255, 255, 0, 0));
+	if (iter % 3 == 2)
+		return (ft_color_int(255, 255, 255, 255));
+	return (ft_color_int(255, 0, 0, 255));
+}
+
+int	color_up(int c1, int c2, double s)
+{
+	double	t;
+	int ret;
+
+	t = pow(s, 2);
+	ret = round((1 - t) * c1 + t * c2);
+	return (ret); 
+}
+int	color_dn(int c1, int c2, double s)
+{
+	double	t;
+	int ret;
+
+	t = 1 - pow(s, 2);
+	ret = round((1 - t) * c1 + t * c2);
+	return (ret); 
+}
+
+int ft_color_ra(t_vars *vars, int iter)
+{
+	double	s;
+
+	(void)vars;
+	s = (float)iter / 80;
+	if (s > 1)
+		s = 1.0;
+	if (!iter)
+		return (0xFF000000);
+	return (ft_color_int(255 , color_up(130, 255, s), color_up(0, 225, s), color_up(0, 140, s)));
+	
+}
+int ft_color_mono(t_vars *vars, int iter)
+{
+	double	s;
+
+	(void)vars;
+	s = (float)iter / 80;
+	if (s > 1)
+		s = 1.0;
+	if (!iter)
+		return (0xFF000000);
+	return (ft_color_int(255 , color_up(255, 0, s), color_up(255, 0, s), color_up(255, 0, s)));
+	
+}
+int ft_color_bb(t_vars *vars, int iter)
+{
+	double	s;
+
+	(void)vars;
+	s = (float)iter / 40;
+	if (s > 1)
+		s = 1.0;
+	if (!iter)
+		return (0xFF000000);
+	// if (iter < 10)
+	// 	return (ft_color_int(255 , color_dn(0, 25, s), color_dn(0, 15, s), color_dn(30, 90, s)));
+	return (ft_color_int(255 , color_up(0, 225, s), color_up(0, 225, s), color_up(30, 255, s)));
+	
+}
+
+int ft_color_wo(t_vars *vars, int iter)
+{
+	double	s;
+
+	(void)vars;
+	s = (float)iter / 15;
+	if (s > 1)
+		s = 1.0;
+	if (!iter)
+		return (0xFFFFFFFF);
+	if (iter < 10)
+		return (ft_color_int(255 , color_up(255, 255, s), color_up(255, 224, s), color_up(255, 87, s)));
+	return (ft_color_int(255 , color_up(255, 223, s), color_up(224, 98, s), color_up(87, 52, s)));
+	
+}
+
+int ft_color_cr(t_vars *vars, int iter)
+{
+	double	s;
+
+	(void)vars;
+	s = (float)iter / 15;
+	if (s > 1)
+		s = 1.0;
+	if (!iter)
+		return (0xFFFFFFFF);
+	// if (iter < 12)
+	// 	return (ft_color_int(255 , 255, 255, 255));
+	return (ft_color_int(255 , color_up(255, 255, s), color_up(255, 0, s), color_up(255, 0, s)));
+	
+}
+
+int	ft_color_sin(t_vars *vars, int iter)
+{
+	iter = iter + 1 - (log(2) / vars->iteration) / log (2);
+	if (!iter)
+		return (0xFF000000);
+	return (ft_color_int(255, 
+		sin(0.016 * iter + 4) * 230 + 25, 
+		sin(0.013 * iter + 2) * 230 + 25, 
+		sin(0.01 * iter + 1) * 230 + 25));
+	
+}
+int ft_color_hue(int iter)
+{
+	double	iter_d;
+
+	if (!iter)
+		return (0xFF000000);
+	iter_d = iter;
+	return (ft_color_hsv(sin(0.011 * iter_d + 2) * 110 + 35, sin(iter_d * 0.015) + 1.0, 1.0));
+}
 void	ft_color(int iter, double x, double y, t_vars *vars)
 {
 	t_data img;
-	int in_set;
 
 	img = vars->img;
 	x *= vars->window_data.width;
 	y *= vars->window_data.height;
-	in_set = 0xFF000000;
-	if (iter >= vars->iteration)
-	{
-		ft_mlx_pixel_put(&img, x, y, in_set);
-		return ;
-	}
-	if (iter % 2 == 0)
-		ft_mlx_pixel_put(&img, x, y, 0xFFFFFFFF);
-	else
-		ft_mlx_pixel_put(&img, x, y , ft_color_int(255, (3 * iter) % 255, (3 * iter) % 255, (3 * iter) % 255));
-	// if (iter < 80)
-	// 	ft_mlx_pixel_put(&img, x, y, ft_color_int(255, 177, 0, 0));
-	// else
-	// 	ft_mlx_pixel_put(&img, x, y, ft_color_int(255, 255, 225, 140));
-	// ft_mlx_pixel_put(&img, x, y, ft_color_hsv(3 * iter * vars->iteration % 360, 1.0, 1.0));
+	if (vars->color == 0)
+		ft_mlx_pixel_put(&img, x, y, ft_color_mono(vars, iter));
+	if (vars->color == 1)
+		ft_mlx_pixel_put(&img, x, y, ft_color_bbr(iter));
+	if (vars->color == 2)
+		ft_mlx_pixel_put(&img, x, y, ft_color_ra(vars, iter));
+	if (vars->color == 3)
+		ft_mlx_pixel_put(&img, x, y, ft_color_sin(vars, iter));
+	if (vars->color == 4)
+		ft_mlx_pixel_put(&img, x, y, ft_color_bb(vars, iter));
+	if (vars->color == 5)
+		ft_mlx_pixel_put(&img, x, y, ft_color_wo(vars, iter));
+	if (vars->color == 6)
+		ft_mlx_pixel_put(&img, x, y, ft_color_hue(iter));
+	if (vars->color == 7)
+		ft_mlx_pixel_put(&img, x, y, ft_color_cr(vars, iter));
 }
-
 
