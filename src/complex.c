@@ -1,4 +1,5 @@
 #include "../includes/mlx_lp.h"
+
 double	ft_complex_sqrnorm(t_complex c)
 {
 	double	a;
@@ -19,6 +20,14 @@ t_complex ft_complex_mult(t_complex c1, t_complex c2)
 	return (tmp);
 }
 
+t_complex ft_complex_div(t_complex c1, t_complex c2)
+{
+	t_complex	ret;
+
+	ret.real = (c1.real * c2.real + c1.imaginary * c2.imaginary) / (c2.real * c2.real + c2.imaginary * c2.imaginary);
+	ret.imaginary = (-c1.real * c2.imaginary + c1.imaginary * c2.real) / (c2.real * c2.real + c2.imaginary * c2.imaginary);
+	return (ret);
+}
 t_complex ft_complex_add(t_complex c1, t_complex c2)
 {
 	t_complex tmp;
