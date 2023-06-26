@@ -18,6 +18,23 @@ void	ft_mlx_exit(t_vars *vars)
 	free(vars->mlx);
 	exit(0);
 }
+void	ft_julia_set(t_vars *vars)
+{
+	if (vars->c.real == -0.566667)
+		vars->c = ft_complex_create(0.18, -0.566667);
+	else if (vars->c.real == 0.18)
+		vars->c = ft_complex_create(-0.75, 0.0);
+	else if (vars->c.real == -0.75)
+		vars->c = ft_complex_create(-0.12, 0.75);
+	else if (vars->c.real == -0.12)
+		vars->c = ft_complex_create(0.1, 0.65);
+	else if (vars->c.real == 0.1)
+		vars->c = ft_complex_create(-0.77146, -0.10119);
+	else if (vars->c.real == -0.77146)
+		vars->c = ft_complex_create(0.0, -1.0);
+	else 
+		vars->c = ft_complex_create(-0.566667, 0.520000);
+}
 int	ft_mlx_key_hook(int keycode, t_vars *vars)
 {
 	float	offset;
@@ -33,66 +50,32 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 	mlx_destroy_image(vars->mlx, vars->img.img);
 	init_img(vars);
 	if (keycode == '1')
-	{
-		vars->c.real = -0.506667;
-		vars->c.imaginary = 0.520000;
-		vars->fractal = ft_julia;
-	}
+		vars->fractal = ft_mandelbrot;
 	if (keycode == '2')
 	{
-		vars->c.real = 0.18;
-		vars->c.imaginary = -0.566667;
+		ft_julia_set(vars);
 		vars->fractal = ft_julia;
 	}
 	if (keycode == '3')
 	{
-		vars->c.real = -0.75;
-		vars->c.imaginary = 0.0;
-		vars->fractal = ft_julia;
+		vars->power = 4;
+		vars->fractal = ft_flower;
 	}
 	if (keycode == '4')
 	{
-		vars->c.real = -0.12;
-		vars->c.imaginary = 0.75;
-		vars->fractal = ft_julia;
+		vars->color = 9;
+		vars->fractal = ft_newton;
 	}
 	if (keycode == '5')
 	{
-		vars->c.real = 0.1;
-		vars->c.imaginary = 0.65;
-		vars->fractal = ft_julia;
+		vars->color = 4;
+		vars->power = 2;
+		vars->fractal = ft_burning_ship;
 	}
 	if (keycode == '6')
 	{
-		vars->c.real = 0.0;
-		vars->c.imaginary = -1.0;
-		vars->fractal = ft_julia;
-	}
-	// if (keycode == '7')
-	// {
-	// 	vars->c.real = -0.77146;
-	// 	vars->c.imaginary = -0.10119;
-	// 	vars->fractal = ft_julia;
-	// }
-	if (keycode == '7')
-	{
-		vars->fractal = ft_newton;
-	}
-	if (keycode == '8')
-	{
-		vars->fractal = ft_flower;
-	}
-	if (keycode == '9')
-	{
+		vars->color = 3;
 		vars->fractal = ft_nova;
-	}
-	if (keycode == 'v')
-	{
-		vars->fractal = ft_burning_ship;
-	}
-	if (keycode == 't')
-	{
-		vars->fractal = ft_mandelbrot;
 	}
 	if (keycode == 'd')
 	{
@@ -145,7 +128,11 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 			vars->is_menu_on = 1;
 	}
 	if (keycode == 'c')
+	{
 		vars->color++;
+		if (vars->color >= 9)
+			vars->color = 0;
+	}
 	if (keycode == 32)
 		vars->power++;
 	ft_fractal(vars->fractal, vars);
