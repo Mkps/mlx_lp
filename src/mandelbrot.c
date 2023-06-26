@@ -310,55 +310,48 @@ void ft_burning_ship(t_vars *vars)
 		x += 0.001 * vars->resolution;
 	}
 }
+t_complex ft_newton_f(t_complex c)
+{
+	t_complex	tmp;
+
+	tmp = ft_complex_pow(c, 3);
+	tmp = ft_complex_sub(tmp, ft_complex_create(1.0, 0.0));
+	return (tmp);
+}
+t_complex	ft_newton_df(t_complex c)
+{
+	t_complex	tmp;
+
+	tmp = ft_complex_pow(c, 2);
+	tmp.real = tmp.real * 3.0;
+	tmp.imaginary = tmp.imaginary * 3.0;
+	return (tmp);
+}
 int is_in_set_newton(double x, double y, t_vars *vars)
 {
 	int			i;
 	t_complex	z;
-	t_complex	c;
 	t_complex	z_num;
 	t_complex	z_den;
 	t_complex	o;
-	t_complex	z2;
-	t_complex	z3;
-	t_complex	inv;
+	// t_complex	inv;
 
-	z.real = 1;
-	z.imaginary = 0;
-	c.real = x;
-	c.imaginary = y;
+	z.real = x;
+	z.imaginary = y;
 	i = 1;
 	while (i < vars->iteration)
 	{
 		o = z;
-		z2 = ft_complex_mult(z, z);
-		z3 = ft_complex_mult(z2, z);
-		z_num.real = ft_complex_pow(z, 4).real; 
-		z_num.imaginary = ft_complex_pow(z,4).imaginary; 
-		z_den.real = 4 * z3.real;
-		z_den.imaginary = 4 * z3.imaginary;
-		inv.real = z_den.real;
-		inv.imaginary = z_den.imaginary * -1;
-		z_num = ft_complex_mult(z_num, inv);
-		z_den = ft_complex_mult(z_den, inv);
-		if (z_den.real != 0)
-		{
-			z.real = z_num.real / z_den.real;
-			z.imaginary = z_num.imaginary / z_den.real;
-		}
-		z.real = z.real + c.real;
-		z.imaginary = z.imaginary + c.imaginary;
-		if (fabs(z.real - o.real) < 0.0000000001 && fabs(z.imaginary - o.imaginary) < 0.0000000001)
-		{
-			printf("orbit traped at %f + %fi\n", z.real, z.imaginary);
-			return (i * ft_complex_sqrnorm(z));
-		}
-		if (ft_complex_sqrnorm(z) > 4.0)
-			return (i * ft_complex_sqrnorm(z));
+		z_num = ft_newton_f(z);
+		z_den = ft_newton_df(z);
+		z = ft_complex_div(z_num, z_den);
+		z.real = o.real - z.real;
+		z.imaginary = o.imaginary - z.imaginary; 
+		if (fabs(z.real - o.real) < 0.00001 && fabs(z.imaginary - o.imaginary) < 0.00001)
+			return (trunc(ft_complex_arg(z)));
 		i++;
 	}
-	if (i >= vars->iteration)
-		return (0);
-	return (i * ft_complex_sqrnorm(z));		
+	return (trunc(ft_complex_arg(z)));
 }
 
 void ft_newton(t_vars *vars)

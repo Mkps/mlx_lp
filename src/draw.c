@@ -273,6 +273,15 @@ int ft_color_hue(int iter)
 	iter_d = iter;
 	return (ft_color_hsv(sin(0.011 * iter_d + 2) * 110 + 35, sin(iter_d * 0.015) + 1.0, 1.0));
 }
+int ft_color_newton(int iter)
+{
+	double	iter_d;
+
+	// if (!iter)
+	// 	return (0xFF000000);
+	iter_d = iter;
+	return (ft_color_hsv(iter_d * 200, 0.8, 1.0));
+}
 void	ft_color(int iter, double x, double y, t_vars *vars)
 {
 	t_data img;
@@ -280,8 +289,10 @@ void	ft_color(int iter, double x, double y, t_vars *vars)
 	img = vars->img;
 	x *= vars->window_data.width;
 	y *= vars->window_data.height;
+	// if (vars->color == 0)
+	// 	ft_mlx_pixel_put(&img, x, y, ft_color_mono(vars, iter));
 	if (vars->color == 0)
-		ft_mlx_pixel_put(&img, x, y, ft_color_mono(vars, iter));
+		ft_mlx_pixel_put(&img, x, y, ft_color_newton(iter));
 	if (vars->color == 1)
 		ft_mlx_pixel_put(&img, x, y, ft_color_bbr(iter));
 	if (vars->color == 2)
