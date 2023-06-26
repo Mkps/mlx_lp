@@ -22,7 +22,7 @@ void	ft_vars_init(t_vars *vars)
 	vars->is_menu_on = 0;
 	vars->zoom = 1.0;
 	vars->color = 0;
-	vars->power = 3;
+	vars->power = 1;
 }
 
 

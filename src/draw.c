@@ -280,7 +280,7 @@ int ft_color_newton(int iter)
 	// if (!iter)
 	// 	return (0xFF000000);
 	iter_d = iter;
-	return (ft_color_hsv(iter_d * 200, 0.8, 1.0));
+	return (ft_color_hsv((iter_d + 4) * 3 + 190, fabs(sin(iter_d * 0.03) + 0.4), 0.8));
 }
 void	ft_color(int iter, double x, double y, t_vars *vars)
 {
