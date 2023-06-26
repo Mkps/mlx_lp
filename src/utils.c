@@ -9,6 +9,11 @@ void	ft_swap(int *a, int *b)
 	*b = tmp;
 }
 
+double	ft_lerp(double a, double b, double t)
+{
+	return (a + t * (b - a));
+}
+
 int ft_abs(int number)
 {
 	if (number >= 0)
@@ -24,14 +29,26 @@ float ft_fabs(float number)
 	number *= -1;
 	return (number);
 }
-
+int	ft_is_in_set(char c, char *set)
+{
+	while (*set)
+	{
+		if (c == *set)
+			return (1);
+		set++;
+	}
+	return (0);
+}
 void ft_menu(t_vars *vars)
 {
 	int x;
 	int	color;
 
 	x = vars->window_data.width / 20;
-	color = 0xFFFFFFFF;
+	if (vars->color >= 0 && vars->color <= 3)
+		color = 0xFFFFFFFF;
+	else
+		color = 0xFF000000;
 	if (vars->is_menu_on == 0)
 	{
 		mlx_string_put(vars->mlx, vars->w_ptr, x, 10, color,
@@ -50,7 +67,7 @@ void ft_menu(t_vars *vars)
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 110, color,
 			"Change Color : [TAB] || L-Mouse R-Mouse");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 135, color,
-			"Increase/Decrease current iteration : [+] [-]");
+			"Increase/Decrease current iteration : [U] [J]");
 	mlx_string_put(vars->mlx, vars->w_ptr, x, 195, color,
 			"Exit : [ESCAPE]");
 }

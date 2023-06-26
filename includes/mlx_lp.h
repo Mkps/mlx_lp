@@ -5,8 +5,6 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
-# include <sys/wait.h>
-# include <time.h>
 # include <math.h>
 
 
@@ -94,5 +92,6 @@ t_complex	ft_complex_div(t_complex c1, t_complex c2);
 t_complex	ft_complex_inv(t_complex num, t_complex den);
 double		ft_complex_sqrnorm(t_complex c);
 float		ft_complex_arg(t_complex c);
+int			ft_is_in_set(char c, char *set);
 
 #endif

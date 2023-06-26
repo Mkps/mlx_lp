@@ -67,7 +67,6 @@ void draw_triangle(t_data *img, int x, int y, int size, int color)
 	ft_draw_line(img, x, y, x + size, y, color);
 	ft_draw_line(img, x, y , x + size / 2, y + size, color);
 	ft_draw_line(img, x + (size / 2), y + size, x + size, y, color);
-
 }
 
 void draw_rect(t_data *img, int w, int h, int color)
@@ -174,7 +173,7 @@ int ft_color_ra(t_vars *vars, int iter)
 	double	s;
 
 	(void)vars;
-	s = (float)iter / 80;
+	s = (float)iter / 40;
 	if (s > 1)
 		s = 1.0;
 	if (!iter)
@@ -187,7 +186,7 @@ int ft_color_mono(t_vars *vars, int iter)
 	double	s;
 
 	(void)vars;
-	s = (float)iter / 80;
+	s = (float)iter / vars->iteration;
 	if (s > 1)
 		s = 1.0;
 	if (!iter)
@@ -209,7 +208,7 @@ int ft_color_bb(t_vars *vars, int iter)
 	
 }
 
-int ft_color_wo(t_vars *vars, int iter)
+int ft_color_br(t_vars *vars, int iter)
 {
 	double	s;
 
@@ -218,10 +217,8 @@ int ft_color_wo(t_vars *vars, int iter)
 	if (s > 1)
 		s = 1.0;
 	if (!iter)
-		return (0xFFFFFFFF);
-	if (iter < 10)
-		return (ft_color_int(255 , color_up(255, 255, s), color_up(255, 224, s), color_up(255, 87, s)));
-	return (ft_color_int(255 , color_up(255, 223, s), color_up(224, 98, s), color_up(87, 52, s)));
+		return (0xFF000000);
+	return (ft_color_int(255 , color_up(0, 223, s), color_up(0, 0, s), color_up(0, 0, s)));
 	
 }
 
@@ -230,7 +227,7 @@ int ft_color_cr(t_vars *vars, int iter)
 	double	s;
 
 	(void)vars;
-	s = (float)iter / 15;
+	s = (float)iter / vars->iteration;
 	if (s > 1)
 		s = 1.0;
 	if (!iter)
@@ -259,20 +256,13 @@ int ft_color_hue(int iter)
 	iter_d = iter;
 	return (ft_color_hsv(sin(0.011 * iter_d + 2) * 110 + 35, sin(iter_d * 0.015) + 1.0, 1.0));
 }
-int ft_color_hue2(int iter)
-{
-	double	iter_d;
-
-	iter_d = iter;
-	return (ft_color_hsv((iter_d + 4) * 3 + 190, fabs(sin(iter_d * 0.03) + 0.4), 0.8));
-}
-int	ft_color_bs(int	iter)
+int	ft_color_bs(t_vars *vars, int iter)
 {
 	double	s;
 	double	s2;
 
 	s = (float)iter / 20;
-	s2 = (float)(iter) / 40;
+	s2 = (float)(iter) / ((float)vars->iteration / 4);
 	if (s > 1)
 		s = 1.0;
 	if (s2 > 1)
@@ -301,7 +291,7 @@ void	ft_color(int iter, double x, double y, t_vars *vars)
 	x *= vars->window_data.width;
 	y *= vars->window_data.height;
 	if (vars->color == 0)
-		ft_mlx_pixel_put(&img, x, y, ft_color_mono(vars, iter));
+		ft_mlx_pixel_put(&img, x, y, ft_color_bs(vars, iter));
 	if (vars->color == 1)
 		ft_mlx_pixel_put(&img, x, y, ft_color_bb(vars, iter));
 	if (vars->color == 2)
@@ -309,15 +299,13 @@ void	ft_color(int iter, double x, double y, t_vars *vars)
 	if (vars->color == 3)
 		ft_mlx_pixel_put(&img, x, y, ft_color_sin(vars, iter));
 	if (vars->color == 4)
-		ft_mlx_pixel_put(&img, x, y, ft_color_bs(iter));
-	if (vars->color == 5)
-		ft_mlx_pixel_put(&img, x, y, ft_color_wo(vars, iter));
-	if (vars->color == 6)
 		ft_mlx_pixel_put(&img, x, y, ft_color_hue(iter));
-	if (vars->color == 7)
-		ft_mlx_pixel_put(&img, x, y, ft_color_hue2(iter));
-	if (vars->color == 8)
+	if (vars->color == 5)
+		ft_mlx_pixel_put(&img, x, y, ft_color_br(vars, iter));
+	if (vars->color == 6)
 		ft_mlx_pixel_put(&img, x, y, ft_color_cr(vars, iter));
+	if (vars->color == 7)
+		ft_mlx_pixel_put(&img, x, y, ft_color_mono(vars, iter));
 	if (vars->color == 9)
 		ft_mlx_pixel_put(&img, x, y, ft_color_newton(iter));
 }
