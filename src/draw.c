@@ -242,8 +242,8 @@ int	ft_color_sin(t_vars *vars, int iter)
 	if (!iter)
 		return (0xFF000000);
 	return (ft_color_int(255, 
-		sin(0.016 * iter + 4) * 230 + 25, 
-		sin(0.013 * iter + 2) * 230 + 25, 
+		sin(0.116 * iter + 4) * 230 + 25 , 
+		sin(0.013 * iter + 2) * 255 + 25, 
 		sin(0.01 * iter + 1) * 230 + 25));
 	
 }
@@ -254,7 +254,7 @@ int ft_color_hue(int iter)
 	if (!iter)
 		return (0xFF000000);
 	iter_d = iter;
-	return (ft_color_hsv(sin(0.011 * iter_d + 2) * 110 + 35, sin(iter_d * 0.015) + 1.0, 1.0));
+	return (ft_color_hsv(3 * iter % 255, 0.5 * sin(iter_d * 0.015) + 0.5, 1.0));
 }
 int	ft_color_bs(t_vars *vars, int iter)
 {

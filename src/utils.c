@@ -44,7 +44,7 @@ void ft_menu(t_vars *vars)
 	int x;
 	int	color;
 
-	x = vars->window_data.width / 20;
+	x = vars->window_data.width / 25;
 	if (vars->color >= 0 && vars->color <= 3)
 		color = 0xFFFFFFFF;
 	else
@@ -117,6 +117,7 @@ double	ft_atof(char *str)
 	{
 		ft_putstr_fd("Incorrect parameter: ", 2);
 		ft_putendl_fd(str, 2);
+		ft_putstr_fd("Use ./fractol [Julia] [real value] [imaginary value]\n", 2);
 		exit (1);
 	}
 	return (result);

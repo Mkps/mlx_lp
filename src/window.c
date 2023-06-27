@@ -19,6 +19,15 @@ void	ft_mlx_exit(t_vars *vars)
 	free(vars->mlx);
 	exit(0);
 }
+int	ft_mlx_mouse_hook(int keycode, int x, int y, t_vars *vars)
+{
+	if (keycode == 4)
+		vars->zoom *= 0.5;
+	else if (keycode == 5)
+		vars->zoom *= 1.5;
+	printf("mouse = %i %i %i\n", keycode, x, y);
+	return (0);
+}
 void	ft_julia_set(t_vars *vars)
 {
 	if (vars->c.real == -0.77146)
@@ -128,16 +137,21 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == 65307 || keycode == 27)		
 		ft_mlx_exit(vars);
-	mlx_destroy_image(vars->mlx, vars->img.img);
-	init_img(vars);
 	if (keycode >= 1 && keycode <= '6')
 		ft_fractal_picker(keycode, vars);
 	ft_key_movement(keycode, vars);
 	ft_window_controls(keycode, vars);
+	return (0);
+}
+int	ft_mlx_render(t_vars *vars)
+{
+	// mlx_destroy_image(vars->mlx, vars->img.img);
+	// init_img(vars);
 	ft_fractal(vars->fractal, vars);
 	mlx_put_image_to_window(vars->mlx, vars->w_ptr, vars->img.img, 0, 0);
 	ft_menu(vars);
 	return (0);
+
 }
 int ft_mlx_destroy_hook(t_vars *vars)
 {

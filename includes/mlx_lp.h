@@ -74,6 +74,8 @@ void		ft_burning_ship(t_vars *vars);
 void		ft_nova(t_vars *vars);
 void		ft_newton(t_vars *vars);
 int			ft_mlx_key_hook(int keycode, t_vars *vars);
+int			ft_mlx_mouse_hook(int keycode, int x, int y, t_vars *vars);
+int			ft_mlx_render(t_vars *vars);
 void		init_img(t_vars *vars);
 void		ft_fractal(void(*f)(t_vars*), t_vars *vars);
 int			ft_color_hsv(double h, double s, double v);
