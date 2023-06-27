@@ -52,7 +52,7 @@ void ft_mandelbrot(t_vars *vars)
 }
 
 /** NB: mandel at powers have n - 1 lobes */ 
-int is_in_set_flower(double x, double y, t_vars *vars)
+static int is_in_set_power(double x, double y, t_vars *vars)
 {
 	int	i;
 	t_complex z;
@@ -76,7 +76,7 @@ int is_in_set_flower(double x, double y, t_vars *vars)
 	return (i);		
 }
 
-void ft_flower(t_vars *vars)
+void ft_power(t_vars *vars)
 {
 	double x;
 	double y;
@@ -96,7 +96,7 @@ void ft_flower(t_vars *vars)
 		{
 			point_x = ft_lerp(-k * screen_ratio + vars->offset_x, k * screen_ratio + vars->offset_x, x);
 			point_y = ft_lerp(-k + vars->offset_y, k + vars->offset_y, y);
-			iter = is_in_set_flower(point_x, point_y, vars);
+			iter = is_in_set_power(point_x, point_y, vars);
 			ft_color(iter, x, y, vars);
 			y+= 0.001 * vars->resolution;
 		}

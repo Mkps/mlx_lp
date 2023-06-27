@@ -77,4 +77,47 @@ void	ft_fractal(void (*f)(t_vars*), t_vars *vars)
 	f(vars);
 }
 
+double	ft_atof(char *str)
+{
+	int		sign;
+	int		decimal;
+	int		i;
+	double	result;
 
+	i = 0;
+	sign = 1;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	result = 0;
+	while (ft_isdigit(str[i]))
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	if (str[i] == '.')
+		i++;
+	decimal = 0;
+	while (ft_isdigit(str[i]))
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+		decimal++;
+	}
+	while (decimal)
+	{
+		result /= 10.0;
+		decimal--;
+	}
+	result *= sign;
+	if (str[i] != 0)
+	{
+		ft_putstr_fd("Incorrect parameter: ", 2);
+		ft_putendl_fd(str, 2);
+		exit (1);
+	}
+	return (result);
+}

@@ -26,7 +26,6 @@ int is_in_set_newton(double x, double y, t_vars *vars)
 	t_complex	z_num;
 	t_complex	z_den;
 	t_complex	o;
-	// t_complex	inv;
 
 	z.real = x;
 	z.imaginary = y;

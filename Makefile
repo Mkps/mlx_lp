@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = mlx_lp
+NAME = fractol
 SRCDIR = src
 INCDIR = includes
 OBJ_DIR = build

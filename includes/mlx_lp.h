@@ -69,7 +69,7 @@ void		draw_triangle(t_data *img, int x, int y, int size, int color);
 void		draw_rect(t_data *img, int w, int h, int color);
 void		ft_mandelbrot(t_vars *vars);
 void		ft_julia(t_vars *vars);
-void		ft_flower(t_vars *vars);
+void		ft_power(t_vars *vars);
 void		ft_burning_ship(t_vars *vars);
 void		ft_nova(t_vars *vars);
 void		ft_newton(t_vars *vars);
@@ -91,6 +91,7 @@ t_complex	ft_complex_sub(t_complex c1, t_complex c2);
 t_complex	ft_complex_div(t_complex c1, t_complex c2);
 t_complex	ft_complex_inv(t_complex num, t_complex den);
 double		ft_complex_sqrnorm(t_complex c);
+double		ft_atof(char *str);
 float		ft_complex_arg(t_complex c);
 int			ft_is_in_set(char c, char *set);
 
