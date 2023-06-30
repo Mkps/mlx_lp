@@ -6,8 +6,8 @@ double	ft_complex_sqrnorm(t_complex c)
 	double	a;
 	double	b;
 
-	a = c.real * c.real;
-	b = c.imaginary * c.imaginary;
+	a = c.r * c.r;
+	b = c.i * c.i;
 	return (a + b);
 }
 
@@ -15,8 +15,8 @@ t_complex ft_complex_mult(t_complex c1, t_complex c2)
 {
 	t_complex	tmp;
 
-	tmp.real = c1.real * c2.real - c1.imaginary * c2.imaginary;
-	tmp.imaginary = c1.real * c2.imaginary + c2.real * c1.imaginary;
+	tmp.r = c1.r * c2.r - c1.i * c2.i;
+	tmp.i = c1.r * c2.i + c2.r * c1.i;
 	
 	return (tmp);
 }
@@ -26,16 +26,16 @@ t_complex ft_complex_inv(t_complex num, t_complex den)
 	t_complex	inv;
 	t_complex	ret;
 
-	inv.real = den.real;
-	inv.imaginary = den.imaginary * -1;
+	inv.r = den.r;
+	inv.i = den.i * -1;
 	num = ft_complex_mult(num, inv);
 	den = ft_complex_mult(den, inv);
-	ret.real = 0;
-	ret.imaginary = 0;
-	if (den.real != 0)
+	ret.r = 0;
+	ret.i = 0;
+	if (den.r != 0)
 	{
-	ret.real = num.real / den.real;
-	ret.imaginary = num.imaginary / den.real;
+	ret.r = num.r / den.r;
+	ret.i = num.i / den.r;
 	}
 	return (ret);
 }
@@ -44,8 +44,8 @@ t_complex ft_complex_div(t_complex c1, t_complex c2)
 {
 	t_complex	ret;
 
-	ret.real = (c1.real * c2.real + c1.imaginary * c2.imaginary) / (c2.real * c2.real + c2.imaginary * c2.imaginary);
-	ret.imaginary = (-1 * c1.real * c2.imaginary + c1.imaginary * c2.real) / (c2.real * c2.real + c2.imaginary * c2.imaginary);
+	ret.r = (c1.r * c2.r + c1.i * c2.i) / (c2.r * c2.r + c2.i * c2.i);
+	ret.i = (-1 * c1.r * c2.i + c1.i * c2.r) / (c2.r * c2.r + c2.i * c2.i);
 	return (ret);
 }
 
@@ -53,26 +53,26 @@ t_complex ft_complex_add(t_complex c1, t_complex c2)
 {
 	t_complex tmp;
 
-	tmp.real = c1.real + c2.real;
-	tmp.imaginary = c1.imaginary + c2.imaginary;
+	tmp.r = c1.r + c2.r;
+	tmp.i = c1.i + c2.i;
 	return (tmp);
 }
 t_complex ft_complex_sub(t_complex c1, t_complex c2)
 {
 	t_complex tmp;
 
-	tmp.real = c1.real - c2.real;
-	tmp.imaginary = c1.imaginary - c2.imaginary;
+	tmp.r = c1.r - c2.r;
+	tmp.i = c1.i - c2.i;
 	return (tmp);
 }
 
 float	ft_complex_norm(t_complex c)
 {
-	return (c.real * c.real + c.imaginary * c.imaginary);
+	return (c.r * c.r + c.i * c.i);
 }
 float	ft_complex_arg(t_complex c)
 {
-	return (atan2(c.imaginary, c.real));
+	return (atan2(c.i, c.r));
 }
 
 t_complex ft_complex_pow(t_complex c1, int pow)
@@ -81,8 +81,8 @@ t_complex ft_complex_pow(t_complex c1, int pow)
 
 	if (pow <= 0)
 	{
-		tmp.real = 1;
-		tmp.imaginary = 0;
+		tmp.r = 1;
+		tmp.i = 0;
 	}
 	if (pow == 1)
 		return (c1);
@@ -100,7 +100,7 @@ t_complex ft_complex_create(double real, double imaginary)
 {
 	t_complex	ret;
 
-	ret.real = real;
-	ret.imaginary = imaginary;
+	ret.r = real;
+	ret.i = imaginary;
 	return (ret);
 }

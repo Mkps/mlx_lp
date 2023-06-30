@@ -1,5 +1,4 @@
 #include "../includes/mlx_lp.h"
-#include <stdint.h>
 
 void	draw_line_old(t_data *img, int x1, int y1, int x2, int y2)
 {
@@ -288,8 +287,8 @@ void	ft_color(int iter, double x, double y, t_vars *vars)
 	t_data img;
 
 	img = vars->img;
-	x *= vars->window_data.width;
-	y *= vars->window_data.height;
+	x *= vars->w_data.width;
+	y *= vars->w_data.height;
 	if (vars->color == 0)
 		ft_mlx_pixel_put(&img, x, y, ft_color_bs(vars, iter));
 	if (vars->color == 1)

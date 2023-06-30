@@ -6,10 +6,10 @@ int is_in_set(double x, double y, t_vars *vars)
 	t_complex	c;
 	int			i;
 
-	c.real = x;
-	c.imaginary = y;
-	z.real = 0;
-	z.imaginary = 0;
+	c.r = x;
+	c.i = y;
+	z.r = 0;
+	z.i = 0;
 	i = 1;
 	while (i < vars->iteration)
 	{
@@ -34,7 +34,7 @@ void ft_mandelbrot(t_vars *vars)
 	double	screen_ratio;
 
 	k = 2.0 * vars->zoom;
-	screen_ratio = (float)vars->window_data.width / vars->window_data.height;
+	screen_ratio = (float)vars->w_data.width / vars->w_data.height;
 	x = 0.0;
 	while (x < 1.0)
 	{
@@ -59,10 +59,10 @@ static int is_in_set_power(double x, double y, t_vars *vars)
 	t_complex c;
 
 	i = 1;
-	c.real = x;
-	c. imaginary = y;
-	z.real = 0.0;
-	z. imaginary = 0.0;
+	c.r = x;
+	c. i = y;
+	z.r = 0.0;
+	z. i = 0.0;
 	while (i <= vars->iteration)
 	{
 		z = ft_complex_pow(z, vars->power);
@@ -86,7 +86,7 @@ void ft_power(t_vars *vars)
 	int 	iter;
 	double	k;
 
-	screen_ratio = (float)vars->window_data.width / vars->window_data.height;
+	screen_ratio = (float)vars->w_data.width / vars->w_data.height;
 	k = 2.0 * vars->zoom;
 	x = 0.0;
 	while (x < 1.0)

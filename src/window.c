@@ -5,7 +5,7 @@ void	init_img(t_vars *vars) {
 	int		line_length;
 	int		endian;
 
-	vars->img.img = mlx_new_image(vars->mlx, vars->window_data.width, vars->window_data.height);
+	vars->img.img = mlx_new_image(vars->mlx, vars->w_data.width, vars->w_data.height);
 	vars->img.addr = mlx_get_data_addr(vars->img.img, &bpp, &line_length, &endian);
 	vars->img.line_length = line_length;
 	vars->img.bits_per_pixel = bpp;
@@ -19,26 +19,44 @@ void	ft_mlx_exit(t_vars *vars)
 	free(vars->mlx);
 	exit(0);
 }
+void	ft_pos_zoom(int x, int y, t_vars *vars)
+{
+	double	width;
+	double	height;
+	double	offwidth;
+	double	offheight;
+
+	width = (float)(vars->w_data.width - x) / vars->w_data.width;
+	width = 1 - width;
+	offwidth = ft_lerp(-2.0 * vars->zoom, 2.0 * vars->zoom, width);
+	vars->offset_x += offwidth;
+	height = (float)(vars->w_data.height - y) / vars->w_data.height;
+	height = 1 - height;
+	offheight = ft_lerp(-2.0 * vars->zoom, 2.0 * vars->zoom, height);
+	vars->offset_y += offheight;
+}
 int	ft_mlx_mouse_hook(int keycode, int x, int y, t_vars *vars)
 {
 	if (keycode == 4)
+	{
+		ft_pos_zoom(x, y, vars);
 		vars->zoom *= 0.5;
+	}
 	else if (keycode == 5)
 		vars->zoom *= 1.5;
-	printf("mouse = %i %i %i\n", keycode, x, y);
 	return (0);
 }
 void	ft_julia_set(t_vars *vars)
 {
-	if (vars->c.real == -0.77146)
+	if (vars->c.r == -0.77146)
 		vars->c = ft_complex_create(0.18, -0.566667);
-	else if (vars->c.real == 0.18)
+	else if (vars->c.r == 0.18)
 		vars->c = ft_complex_create(-0.75, 0.0);
-	else if (vars->c.real == -0.75)
+	else if (vars->c.r == -0.75)
 		vars->c = ft_complex_create(-0.12, 0.75);
-	else if (vars->c.real == -0.12)
+	else if (vars->c.r == -0.12)
 		vars->c = ft_complex_create(-0.566667, 0.520000);
-	else if (vars->c.real == -0.566667)
+	else if (vars->c.r == -0.566667)
 		vars->c = ft_complex_create(0.0, -1.0);
 	else 
 		vars->c = ft_complex_create(-0.77146, -0.10119);

@@ -16,9 +16,14 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+typedef struct	s_coord {
+	double	x;
+	double	y;
+}				t_coord;
+
 typedef struct s_complex {
-	double	real;
-	double	imaginary;
+	double	r;
+	double	i;
 }	t_complex;
 
 typedef struct s_window {
@@ -40,7 +45,7 @@ typedef struct s_vars {
 	int		iteration;
 	float	offset_x;
 	float	offset_y;
-	t_window	window_data;
+	t_window	w_data;
 	
 }	t_vars;
 
