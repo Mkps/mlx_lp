@@ -101,5 +101,11 @@ double		ft_complex_sqrnorm(t_complex c);
 double		ft_atof(char *str);
 float		ft_complex_arg(t_complex c);
 int			ft_is_in_set(char c, char *set);
+int			ft_color_bb(t_vars *vars, int iter);
+int			ft_color_ra(t_vars *vars, int iter);
+int			ft_color_mono(t_vars *vars, int iter);
+int			color_up(int c1, int c2, double s);
+int			color_dn(int c1, int c2, double s);
+int			ft_color_int(int a, int r, int g, int b);
 
 #endif

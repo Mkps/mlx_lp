@@ -1,16 +1,20 @@
 #include "../includes/mlx_lp.h"
 
-void	init_img(t_vars *vars) {
-	int		bpp;
-	int		line_length;
-	int		endian;
+void	init_img(t_vars *vars)
+{
+	int	bpp;
+	int	line_length;
+	int	endian;
 
-	vars->img.img = mlx_new_image(vars->mlx, vars->w_data.width, vars->w_data.height);
-	vars->img.addr = mlx_get_data_addr(vars->img.img, &bpp, &line_length, &endian);
+	vars->img.img = mlx_new_image(vars->mlx, 
+			vars->w_data.width, vars->w_data.height);
+	vars->img.addr = mlx_get_data_addr(vars->img.img, 
+			&bpp, &line_length, &endian);
 	vars->img.line_length = line_length;
 	vars->img.bits_per_pixel = bpp;
 	vars->img.endian = endian;
 }
+
 void	ft_mlx_exit(t_vars *vars)
 {
 	mlx_destroy_image(vars->mlx, vars->img.img);
@@ -19,6 +23,7 @@ void	ft_mlx_exit(t_vars *vars)
 	free(vars->mlx);
 	exit(0);
 }
+
 void	ft_pos_zoom(int x, int y, t_vars *vars)
 {
 	double	width;
@@ -35,6 +40,7 @@ void	ft_pos_zoom(int x, int y, t_vars *vars)
 	offheight = ft_lerp(-2.0 * vars->zoom, 2.0 * vars->zoom, height);
 	vars->offset_y += offheight;
 }
+
 int	ft_mlx_mouse_hook(int keycode, int x, int y, t_vars *vars)
 {
 	if (keycode == 4)
@@ -46,6 +52,7 @@ int	ft_mlx_mouse_hook(int keycode, int x, int y, t_vars *vars)
 		vars->zoom *= 1.5;
 	return (0);
 }
+
 void	ft_julia_set(t_vars *vars)
 {
 	if (vars->c.r == -0.77146)
@@ -61,6 +68,7 @@ void	ft_julia_set(t_vars *vars)
 	else 
 		vars->c = ft_complex_create(-0.77146, -0.10119);
 }
+
 void	ft_fractal_picker(int keycode, t_vars *vars)
 {
 	vars->offset_x = 0;
@@ -99,11 +107,12 @@ void	ft_fractal_picker(int keycode, t_vars *vars)
 		vars->fractal = ft_nova;
 	}
 }
+
 void	ft_key_movement(int keycode, t_vars *vars)
 {
 	float	offset;
 
-	offset = 0.1 * vars->zoom;	
+	offset = 0.1 * vars->zoom;
 	if (offset < 0.0000001)
 		offset = 0.0000001;
 	if (keycode == 'd')
@@ -119,6 +128,7 @@ void	ft_key_movement(int keycode, t_vars *vars)
 	else if (keycode == 'z')
 		vars->zoom *= 1.5;
 }
+
 void	ft_window_controls(int keycode, t_vars *vars)
 {
 	if (keycode == 'u')
@@ -130,9 +140,9 @@ void	ft_window_controls(int keycode, t_vars *vars)
 	else if (keycode == 'l')
 		vars->resolution *= 1.5;
 	else if (keycode == 'b')
-		vars->smooth += 1;	
+		vars->smooth += 1;
 	else if (keycode == 'n')
-		vars->smooth -= 1;	
+		vars->smooth -= 1;
 	else if (keycode == 'h')
 	{
 		if (vars->is_menu_on == 1)
@@ -149,11 +159,11 @@ void	ft_window_controls(int keycode, t_vars *vars)
 	}
 	else if (keycode == 32)
 		vars->power++;
-
 }
+
 int	ft_mlx_key_hook(int keycode, t_vars *vars)
 {
-	if (keycode == 65307 || keycode == 27)		
+	if (keycode == 65307 || keycode == 27)
 		ft_mlx_exit(vars);
 	if (keycode >= 1 && keycode <= '6')
 		ft_fractal_picker(keycode, vars);
@@ -161,38 +171,40 @@ int	ft_mlx_key_hook(int keycode, t_vars *vars)
 	ft_window_controls(keycode, vars);
 	return (0);
 }
+
+// mlx_destroy_image(vars->mlx, vars->img.img);
+// init_img(vars);
 int	ft_mlx_render(t_vars *vars)
 {
-	// mlx_destroy_image(vars->mlx, vars->img.img);
-	// init_img(vars);
 	ft_fractal(vars->fractal, vars);
 	mlx_put_image_to_window(vars->mlx, vars->w_ptr, vars->img.img, 0, 0);
 	ft_menu(vars);
 	return (0);
-
 }
-int ft_mlx_destroy_hook(t_vars *vars)
+
+int	ft_mlx_destroy_hook(t_vars *vars)
 {
 	ft_mlx_exit(vars);
 	return (0);
 }
+
 void	ft_mlx_fill(t_data img, int size_x, int size_y, int color)
 {
-	int x;
-  	int y;
+	int	x;
+	int	y;
 
 	x = 0;
-  	y = 0;
-  	while (y < size_y)
-  	{
-    	x = 0;
-		while(x < size_x)
+	y = 0;
+	while (y < size_y)
+	{
+		x = 0;
+		while (x < size_x)
 		{
 			ft_mlx_pixel_put(&img, x, y, color);
-   			x++;
-   		}
-   		y++;
-  	}
+			x++;
+		}
+		y++;
+	}
 }
 
 void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -200,5 +212,5 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }

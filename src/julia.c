@@ -36,15 +36,15 @@ void	ft_julia(t_vars *vars)
 	while (s.x < 1.0)
 	{
 		s.y = 0.0;
-		while (y < 1.0) 
+		while (s.y < 1.0) 
 		{
 			p.x = ft_lerp(-k * screen_ratio + vars->offset_x, 
 					k * screen_ratio + vars->offset_x, s.x);
 			p.y = ft_lerp(-k + vars->offset_y, k + vars->offset_y, s.y);
 			iter = is_in_set_j(p.x, p.y, vars);
 			ft_color(iter, s.x, s.y, vars);
-			y += 0.001 * vars->resolution;
+			s.y += 0.001 * vars->resolution;
 		}
-		x += 0.001 * vars->resolution;
+		s.x += 0.001 * vars->resolution;
 	}
 }
